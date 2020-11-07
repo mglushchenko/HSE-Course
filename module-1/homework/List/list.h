@@ -79,11 +79,6 @@ public:
         el->previous = this;
     }
 
-    // TODO: is is even needed?
-    void setPrevious(node* el) {
-        previous = el;
-    }
-
     int getValue() const {
         return value;
     }

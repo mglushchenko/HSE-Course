@@ -137,6 +137,9 @@ node* list::get(int index) const{
     if (index < 0 || index >_size) {
         throw std::invalid_argument("Index out of range");
     }
+    if (empty()) {
+        throw std::logic_error("List is empty!");
+    }
 
     int count = 0;
     node* curr = _head;
@@ -209,7 +212,7 @@ void list::resize(size_t count) {
     }
 }
 
-// TODO: is this how it's supposed to work or what
+
 void list::swap(list &other) {
     node* tmp = _head;
     _head = other._head;
