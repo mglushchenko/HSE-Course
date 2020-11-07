@@ -4,6 +4,7 @@
 
 namespace task {
 
+class node;
 
 class list {
 
@@ -40,12 +41,52 @@ public:
     void unique();
     void sort();
 
-    // Your code goes here?..
 
 private:
+    node* _head;
+    node* _tail;
+    size_t _size;
 
-    // Your code goes here...
+    node* get(int index) const;
 
+    void remove(node* el);
+
+    void swap(node* n1, node* n2);
+
+    void heapify(int size, int i);
+};
+
+class node {
+private:
+    int value;
+    node* next;
+    node* previous;
+
+public:
+    friend class list;
+
+    node() {
+        next = nullptr;
+        previous = nullptr;
+    }
+
+    node(int val): node() {
+        value = val;
+    }
+
+    void setNext(node* el) {
+        next = el;
+        el->previous = this;
+    }
+
+    // TODO: is is even needed?
+    void setPrevious(node* el) {
+        previous = el;
+    }
+
+    int getValue() const {
+        return value;
+    }
 };
 
 }  // namespace task
