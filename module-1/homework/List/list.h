@@ -76,7 +76,9 @@ public:
 
     void setNext(node* el) {
         next = el;
-        el->previous = this;
+        if (el) {
+            el->previous = this;
+        }
     }
 
     int getValue() const {

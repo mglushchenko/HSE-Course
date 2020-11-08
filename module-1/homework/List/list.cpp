@@ -1,4 +1,5 @@
 #include <stdexcept>
+#include <iostream>
 #include "list.h"
 
 
@@ -134,7 +135,7 @@ void list::pop_front() {
 }
 
 node* list::get(int index) const{
-    if (index < 0 || index >_size) {
+    if (index < 0 || index >= _size) {
         throw std::invalid_argument("Index out of range");
     }
     if (empty()) {
@@ -224,13 +225,9 @@ void list::swap(list &other) {
 }
 
 void list::swap(node* n1, node* n2) {
-    node* tmp = n2->next;
-    n2->setNext(n1->next);
-    n1->setNext(tmp);
-
-    tmp = n2->previous;
-    n1->previous->setNext(n2);
-    tmp->setNext(n1);
+    int tmp = n1->value;
+    n1->value = n2->value;
+    n2->value = tmp;
 }
 
 void list::heapify(int size, int i) {
@@ -253,8 +250,10 @@ void list::heapify(int size, int i) {
 
 // implements heap sort
 void list::sort() {
-    for (size_t i = _size / 2 - 1; i >= 0; --i)
+    for (size_t i = _size / 2 - 1; i >= 0; --i) {
         heapify(_size, i);
+        if (i == 0) break;
+    }
 
     for (size_t i = _size - 1; i > 0; --i)
     {
