@@ -1,5 +1,4 @@
 #include <stdexcept>
-#include <iostream>
 #include "list.h"
 
 
@@ -15,11 +14,11 @@ list::~list() {
     clear();
 }
 
-// constructs a list containing _count_ copies of _value_
+// constructs a list containing %count% copies of %value%
 list::list(size_t count, const int& value): list() {
     _head = new node(value);
     node* curr = _head;
-    for (int i = 1; i < count; ++i) {
+    for (size_t i = 1; i < count; ++i) {
         node* next = new node(value);
         curr->setNext(next);
         curr = next;
@@ -28,8 +27,24 @@ list::list(size_t count, const int& value): list() {
     _size = count;
 }
 
+list::list(const list& other) {
+    _head = new node(other._head->getValue());
+    node* currSource = other._head->next;
+    node* currDestination = _head;
+    while (currSource) {
+        node* next = new node(currSource->value);
+        currDestination->setNext(next);
+
+        currSource = currSource->next;
+        currDestination = currDestination->next;
+    }
+
+    _tail = currDestination;
+    _size = other.size();
+}
+
 list& list::operator=(const list& other) {
-    if (_head) delete _head;
+    clear();
 
     _head = new node(other._head->getValue());
     node* currSource = other._head->next;
@@ -130,16 +145,18 @@ void list::pop_front() {
         return;
     }
     _head = _head->next;
-    delete _head->previous;
+    if (_head) {
+        delete _head->previous;
+    }
     --_size;
 }
 
 node* list::get(int index) const{
-    if (index < 0 || index >= _size) {
-        throw std::invalid_argument("Index out of range");
-    }
     if (empty()) {
         throw std::logic_error("List is empty!");
+    }
+    if (index < 0 || index >= _size) {
+        throw std::invalid_argument("Index out of range");
     }
 
     int count = 0;
@@ -162,15 +179,28 @@ void list::remove(const int& value) {
         node* tmp = curr->next;
         if (curr->value == value) {
             remove(curr);
-            --_size;
         }
         curr = tmp;
     }
 }
 
 void list::remove(node* el) {
-    el->previous->setNext(el->next);
+    if (_size == 1) {
+        clear();
+        return;
+    }
+
+    if (el->previous) {
+        el->previous->setNext(el->next);
+        if (el == _tail) {
+            _tail = el->previous;
+        }
+    }
+    else {
+        _head = el->next;
+    }
     delete el;
+    --_size;
 }
 
 // removes consecutive duplicate elements
@@ -250,6 +280,8 @@ void list::heapify(int size, int i) {
 
 // implements heap sort
 void list::sort() {
+    if (empty() || _size == 1) return;
+
     for (size_t i = _size / 2 - 1; i >= 0; --i) {
         heapify(_size, i);
         if (i == 0) break;

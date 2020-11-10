@@ -11,7 +11,8 @@ class list {
 public:
 
     list();
-    list(size_t count, const int& value = int());
+    explicit list(size_t count, const int& value = int());
+    list(const list& other);
 
     ~list();
     list& operator=(const list& other);
@@ -70,7 +71,7 @@ public:
         previous = nullptr;
     }
 
-    node(int val): node() {
+    explicit node(int val): node() {
         value = val;
     }
 
