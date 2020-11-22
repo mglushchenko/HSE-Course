@@ -44,3 +44,11 @@ void Point::reflex(Line axis) {
 
     reflex(Point(xIntersect, yIntersect));
 }
+
+void Point::scale(Point center, double coefficient) {
+    double diffX = x - center.x;
+    double diffY = y - center.y;
+
+    x += diffX * coefficient;
+    y += diffY * coefficient;
+}

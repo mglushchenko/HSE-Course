@@ -26,4 +26,6 @@ struct Point {
     void reflex(Point center);
 
     void reflex(Line axis);
+
+    void scale(Point center, double coefficient);
 };

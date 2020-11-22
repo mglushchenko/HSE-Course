@@ -87,7 +87,13 @@ void Ellipse::reflex(Line axis) {
 }
 
 void Ellipse::scale(Point center, double coefficient) {
-    // TODO: ?...
+    f1.scale(center, coefficient);
+    f2.scale(center, coefficient);
+
+    focDist *= coefficient;
+    a *= coefficient;
+    b *= coefficient;
+    c *= coefficient;
 }
 
 

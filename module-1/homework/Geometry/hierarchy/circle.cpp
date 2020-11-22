@@ -44,9 +44,8 @@ void Circle::reflex(Line axis) {
     center.reflex(axis);
 }
 
-// TODO: does it work like this??
+
 void Circle::scale(Point center, double coefficient) {
-    if (center != this->center) {
-        _radius *= coefficient;
-    }
+    this->center.scale(center, coefficient);
+    _radius *= coefficient;
 }
