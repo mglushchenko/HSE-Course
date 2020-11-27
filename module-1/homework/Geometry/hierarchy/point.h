@@ -16,6 +16,11 @@ struct Point {
         this->y = y;
     }
 
+    Point(const Point& other) {
+        x = other.x;
+        y = other.y;
+    }
+
     bool operator==(const Point& other) const;
     bool operator!=(const Point& other) const;
 

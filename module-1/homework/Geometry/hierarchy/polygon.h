@@ -3,6 +3,8 @@
 
 class Polygon: Shape {
 public:
+    Polygon() = default;
+
     Polygon(std::vector<Point>& points) {
         _vertices = points;
     }
@@ -36,6 +38,13 @@ public:
     bool operator==(const Shape& another) const override;
 
     virtual bool isConvex() const;
-private:
+
+protected:
     std::vector<Point> _vertices;
+
+    std::vector<double> getSides() const;
+
+    std::vector<double> getAngles() const;
+    double getAngle(Point vertex, Point p1, Point p2) const;
+
 };
