@@ -32,12 +32,12 @@ double Rectangle::area() const {
     return a * b;
 }
 
-Point Rectangle::center() {
+Point Rectangle::center() const {
     double centerX = (_vertices[0].x + _vertices[2].x) / 2;
     double centerY = (_vertices[0].y + _vertices[2].y) / 2;
     return Point(centerX, centerY);
 }
 
-std::pair<Line, Line> Rectangle::diagonals() {
+std::pair<Line, Line> Rectangle::diagonals() const {
     return std::make_pair(Line(_vertices[0], _vertices[2]), Line(_vertices[1], _vertices[3]));
 }

@@ -5,13 +5,13 @@ Square::Square(Point p1, Point p2)
 
 }
 
-Circle Square::circumscribedCircle() {
+Circle Square::circumscribedCircle() const {
     Point centerPoint = center();
     double radius = _vertices[0].distTo(_vertices[2]) / 2;
     return Circle(centerPoint, radius);
 }
 
-Circle Square::inscribedCircle() {
+Circle Square::inscribedCircle() const {
     Point centerPoint = center();
     double radius = a / 2;
     return Circle(centerPoint, radius);

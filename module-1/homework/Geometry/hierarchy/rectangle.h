@@ -8,9 +8,9 @@ public:
 
     double area() const override;
 
-    Point center();
+    Point center() const;
 
-    std::pair<Line, Line> diagonals();
+    std::pair<Line, Line> diagonals() const;
 
 protected:
     // long and short side lengths

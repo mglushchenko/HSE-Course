@@ -5,7 +5,7 @@ class Square: Rectangle {
 public:
     Square(Point p1, Point p2);
 
-    Circle circumscribedCircle();
+    Circle circumscribedCircle() const;
 
-    Circle inscribedCircle();
+    Circle inscribedCircle() const;
 };
