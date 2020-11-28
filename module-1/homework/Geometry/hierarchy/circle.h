@@ -1,3 +1,6 @@
+#ifndef CIRCLE_H
+#define CIRCLE_H
+
 #include "ellipse.h"
 
 class Circle: Ellipse {
@@ -32,3 +35,5 @@ private:
     Point center;
     double _radius;
 };
+
+#endif

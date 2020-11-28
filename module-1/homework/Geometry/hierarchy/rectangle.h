@@ -1,3 +1,6 @@
+#ifndef RECTANGLE_H
+#define RECTANGLE_H
+
 #include "polygon.h"
 
 class Rectangle: public Polygon {
@@ -16,3 +19,5 @@ protected:
     // long and short side lengths
     double a, b;
 };
+
+#endif

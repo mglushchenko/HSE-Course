@@ -1,3 +1,6 @@
+#ifndef SQUARE_H
+#define SQUARE_H
+
 #include "rectangle.h"
 #include "circle.h"
 
@@ -9,3 +12,5 @@ public:
 
     Circle inscribedCircle() const;
 };
+
+#endif

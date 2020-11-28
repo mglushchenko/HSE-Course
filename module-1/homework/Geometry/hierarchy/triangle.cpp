@@ -1,6 +1,11 @@
-
 #include <cmath>
 #include "triangle.h"
+
+Triangle::Triangle(Point p1, Point p2, Point p3) {
+    _vertices.emplace_back(p1);
+    _vertices.emplace_back(p2);
+    _vertices.emplace_back(p3);
+}
 
 Circle Triangle::circumscribedCircle() const {
     // find two center perpendiculars
@@ -68,4 +73,15 @@ Point Triangle::intersection(const Line& v1, const Line& v2) const {
             (coeffs1[0] * coeffs2[1] - coeffs2[0] * coeffs1[1]);
 
     return Point(intersectX, intersectY);
+}
+
+// Heron's formula
+double Triangle::area() const {
+    double a = _vertices[0].distTo(_vertices[1]);
+    double b = _vertices[1].distTo(_vertices[2]);
+    double c = _vertices[2].distTo(_vertices[0]);
+
+    double s = (a + b + c) / 2;
+
+    return sqrt(s * (s - a) * (s - b) * (s - c));
 }

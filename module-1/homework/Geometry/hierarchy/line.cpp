@@ -15,7 +15,7 @@ Line::Line(Point p1, Point p2) {
     this->p2 = p2;
 }
 
-std::vector<double> Line::getEquationCoeffs() {
+std::vector<double> Line::getEquationCoeffs() const {
     std::vector<double> coeffs;
     double a = p2.y - p1.y;
     coeffs.push_back(a);

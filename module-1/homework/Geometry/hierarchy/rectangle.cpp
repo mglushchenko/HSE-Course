@@ -2,9 +2,8 @@
 #include "rectangle.h"
 
 Rectangle::Rectangle(Point p1, Point p2, double ratio) {
-    _vertices.push_back(p1);
     double d = p1.distTo(p2);
-    a = sqrt(pow(d, 2) / pow(ratio, 2) - 1);
+    a = d / sqrt(ratio * ratio + 1);
     b = ratio * a;
 
     double sine = a / d;

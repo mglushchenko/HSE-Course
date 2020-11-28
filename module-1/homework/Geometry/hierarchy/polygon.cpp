@@ -44,11 +44,11 @@ double Polygon::area() const {
     res += _vertices[verticesCnt - 1].x * _vertices[0].y;
 
     for (int i = 0; i < verticesCnt; ++i) {
-        res += _vertices[i].y * _vertices[i + 1].x;
+        res -= _vertices[i].y * _vertices[i + 1].x;
     }
-    res += _vertices[verticesCnt - 1].y * _vertices[0].x;
+    res -= _vertices[verticesCnt - 1].y * _vertices[0].x;
 
-    return res;
+    return fabs(res / 2);
 }
 
 bool Polygon::operator==(const Shape& another) const {
@@ -114,7 +114,7 @@ bool Polygon::isCongruentTo(const Shape& another) const {
 
     std::vector<int> matches;
     for (size_t i = 0; i < otherSides.size(); ++i) {
-        if (otherSides[i] == sides[0]) {
+        if (approxEq(otherSides[i], sides[0])) {
             matches.emplace_back(i);
         }
     }
@@ -123,7 +123,8 @@ bool Polygon::isCongruentTo(const Shape& another) const {
         int matchNum = m;
         bool mismatch = false;
         for (size_t i = 0; i < sides.size(); ++i) {
-            if (sides[i] != otherSides[matchNum] || angles[i] != otherAngles[matchNum]) {
+            if (!approxEq(sides[i], otherSides[matchNum])  ||
+                !approxEq(angles[i], otherAngles[matchNum])) {
                 mismatch = true;
                 break;
             }
@@ -153,7 +154,7 @@ bool Polygon::isSimilarTo(const Shape& another) const {
 
     std::vector<int> matches;
     for (size_t i = 0; i < otherSides.size(); ++i) {
-        if (otherSides[i] == sides[0]) {
+        if (approxEq(otherSides[i], sides[0])) {
             matches.emplace_back(i);
         }
     }
@@ -164,7 +165,8 @@ bool Polygon::isSimilarTo(const Shape& another) const {
         int matchNum = m;
         bool mismatch = false;
         for (size_t i = 0; i < sides.size(); ++i) {
-            if (sides[i] != otherSides[matchNum] * coeff || angles[i] != otherAngles[matchNum]) {
+            if (!approxEq(sides[i], otherSides[matchNum] * coeff)  ||
+                !approxEq(angles[i], otherAngles[matchNum])) {
                 mismatch = true;
                 break;
             }
@@ -189,10 +191,14 @@ bool Polygon::containsPoint(Point point) const {
         p1 = _vertices[i - 1];
         p2 = _vertices[i];
 
+        if (approxEq(p1.distTo(p2), p1.distTo(point) + p2.distTo(point))) {
+            return true;
+        }
+
         currAngle += getAngle(point, p1, p2);
     }
 
-    return currAngle == 2 * PI;
+    return approxEq(currAngle, 2 * PI);
 }
 
 void Polygon::scale(Point center, double coefficient) {
@@ -227,6 +233,10 @@ double Polygon::getAngle(Point vertex, Point p1, Point p2) const {
 
     double cosine = (pow(segLen1, 2) + pow(segLen2, 2) - pow(chordLen, 2)) / (2 * segLen1 * segLen2);
     return acos(cosine);
+}
+
+bool Polygon::approxEq(double val1, double val2) const {
+    return fabs(val1 - val2) < EPS;
 }
 
 

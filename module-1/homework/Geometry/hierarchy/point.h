@@ -1,3 +1,6 @@
+#ifndef POINT_H
+#define POINT_H
+
 struct Line;
 
 struct Point {
@@ -34,3 +37,5 @@ struct Point {
 
     void scale(Point center, double coefficient);
 };
+
+#endif

@@ -1,6 +1,5 @@
 #include <cmath>
 #include <vector>
-#include "point.h"
 #include "line.h"
 
 bool Point::operator==(const Point& other) const {

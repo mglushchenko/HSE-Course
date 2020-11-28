@@ -1,7 +1,10 @@
+#ifndef POLYGON_H
+#define POLYGON_H
+
 #include "shape.h"
 #include <vector>
 
-class Polygon: Shape {
+class Polygon: public Shape {
 public:
     Polygon() = default;
 
@@ -47,4 +50,7 @@ protected:
     std::vector<double> getAngles() const;
     double getAngle(Point vertex, Point p1, Point p2) const;
 
+    bool approxEq(double val1, double val2) const;
 };
+
+#endif
