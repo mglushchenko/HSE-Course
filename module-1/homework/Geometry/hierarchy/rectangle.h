@@ -1,6 +1,6 @@
 #include "polygon.h"
 
-class Rectangle: Polygon {
+class Rectangle: public Polygon {
 public:
     Rectangle(Point p1, Point p2, double ratio);
 
@@ -8,6 +8,11 @@ public:
 
     double area() const override;
 
-private:
+    Point center();
+
+    std::pair<Line, Line> diagonals();
+
+protected:
+    // long and short side lengths
     double a, b;
 };
