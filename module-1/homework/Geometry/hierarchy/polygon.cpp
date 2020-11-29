@@ -38,12 +38,12 @@ double Polygon::perimeter() const {
 double Polygon::area() const {
     double res = 0;
     int verticesCnt = verticesCount();
-    for (int i = 0; i < verticesCnt; ++i) {
+    for (int i = 0; i < verticesCnt - 1; ++i) {
         res += _vertices[i].x * _vertices[i + 1].y;
     }
     res += _vertices[verticesCnt - 1].x * _vertices[0].y;
 
-    for (int i = 0; i < verticesCnt; ++i) {
+    for (int i = 0; i < verticesCnt - 1; ++i) {
         res -= _vertices[i].y * _vertices[i + 1].x;
     }
     res -= _vertices[verticesCnt - 1].y * _vertices[0].x;
@@ -60,7 +60,7 @@ bool Polygon::operator==(const Shape& another) const {
     int verticesCnt = verticesCount();
     int matchNum = -1;
     for (int i = 0; i < verticesCnt; ++i) {
-        if (p._vertices[i] == _vertices[0]) {
+        if (approxEq(p._vertices[i].x, _vertices[0].x) && approxEq(p._vertices[i].y, _vertices[0].y)) {
             matchNum = i;
             break;
         }
@@ -71,7 +71,7 @@ bool Polygon::operator==(const Shape& another) const {
     }
 
     for (int i = 0; i < verticesCnt; ++i) {
-        if (_vertices[i] != p._vertices[matchNum]) {
+        if (!approxEq(_vertices[i].x, p._vertices[matchNum].x) || !approxEq(_vertices[i].y, p._vertices[matchNum].y)) {
             return false;
         }
         ++matchNum;
@@ -101,7 +101,7 @@ void Polygon::reflex(Line axis) {
 }
 
 bool Polygon::isCongruentTo(const Shape& another) const {
-    Polygon p = dynamic_cast<const Polygon &>(another);
+    Polygon p = dynamic_cast<const Polygon&>(another);
     if (verticesCount() != p.verticesCount()) {
         return false;
     }
@@ -152,17 +152,10 @@ bool Polygon::isSimilarTo(const Shape& another) const {
     std::vector<double> angles = getAngles();
     std::vector<double> otherAngles = p.getAngles();
 
-    std::vector<int> matches;
-    for (size_t i = 0; i < otherSides.size(); ++i) {
-        if (approxEq(otherSides[i], sides[0])) {
-            matches.emplace_back(i);
-        }
-    }
-
     double coeff = sides[0] / otherSides[0];
 
-    for (int m: matches) {
-        int matchNum = m;
+    for (int c = 0; c < verticesCount(); ++c) {
+        int matchNum = c;
         bool mismatch = false;
         for (size_t i = 0; i < sides.size(); ++i) {
             if (!approxEq(sides[i], otherSides[matchNum] * coeff)  ||

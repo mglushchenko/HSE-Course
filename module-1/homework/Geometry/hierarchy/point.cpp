@@ -16,7 +16,6 @@ double Point::distTo(const Point& other) const {
 
 void Point::rotate(Point center, double angle) {
     double angleInRadians = angle * PI / 180;
-
     x -= center.x;
     y -= center.y;
 
@@ -48,6 +47,6 @@ void Point::scale(Point center, double coefficient) {
     double diffX = x - center.x;
     double diffY = y - center.y;
 
-    x += diffX * coefficient;
-    y += diffY * coefficient;
+    x = center.x + diffX * coefficient;
+    y = center.y + diffY * coefficient;
 }
